@@ -1,8 +1,8 @@
 # numpy_intro.py
 """Python Essentials: Intro to NumPy.
-<Name>
-<Class>
-<Date>
+Emmanuel oguadimma 
+ MTH 520
+04/18/25
 """
 
 import numpy as np
@@ -10,12 +10,33 @@ import numpy as np
 
 def prob1():
     """ Define the matrices A and B as arrays. Return the matrix product AB. """
-    raise NotImplementedError("Problem 1 Incomplete")
+    A = np.array([
+        [3, -1, 4],
+        [1, 5, -9]
+    ])
+    B = np.array([
+        [2, 6, -5, 3],
+        [5, -8, 9, 7], 
+        [9, -3, -2, -3]
+    ])
+    # Matrix‐multiply A and B and return the result
+    return A @ B
 
 
 def prob2():
     """ Define the matrix A as an array. Return the matrix -A^3 + 9A^2 - 15A. """
-    raise NotImplementedError("Problem 2 Incomplete")
+    A = np.array([
+        [3, 1, 4],
+        [1, 5, 9],
+        [-5, 3, 1]
+    ])
+
+    # Compute powers of A
+    A2 = A @ A         # A squared
+    A3 = A2 @ A        # A cubed
+
+    # Evaluate the polynomial ‑A^3 + 9A^2 ‑ 15A
+    return -A3 + 9 * A2 - 15 * A
 
 
 def prob3():
@@ -70,3 +91,9 @@ def prob7():
     diagonally) in the grid. Use slicing, as specified in the manual.
     """
     raise NotImplementedError("Problem 7 Incomplete")
+
+    
+if __name__ == "__main__":
+    print("A @ B =\n", prob1()) 
+    print("Result of -A^3 + 9A^2 - 15A =")
+    print(prob2())
