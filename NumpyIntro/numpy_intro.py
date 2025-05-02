@@ -44,7 +44,19 @@ def prob3():
     this section of the manual (not np.array()). Calculate the matrix product ABA,
     change its data type to np.int64, and return it.
     """
-    raise NotImplementedError("Problem 3 Incomplete")
+    N = 7
+
+    # A = upper‐triangular 7×7 of ones
+    A = np.triu(np.ones((N, N), dtype=int), k=0)
+
+    # B[i,j] = –1 for j ≤ i, +5 for j > i
+    # start with all 5's, then subtract 6 on & below the diagonal (5 - 6 = -1)
+    B = 5 * np.ones((N, N), dtype=int) - 6 * np.tri(N, N, k=0, dtype=int)
+
+    # compute ABA and cast to int64
+    C = A @ B @ A
+    return C.astype(np.int64)
+
 
 
 def prob4(A):
@@ -56,7 +68,11 @@ def prob4(A):
         >>> prob4(A)
         array([0, 0, 3])
     """
-    raise NotImplementedError("Problem 4 Incomplete")
+    B = A.copy()
+    # set all negative entries to zero using fancy indexing
+    B[B < 0] = 0
+    return B
+   
 
 
 def prob5():
@@ -68,7 +84,34 @@ def prob5():
     where I is the 3x3 identity matrix and each 0 is a matrix of all zeros
     of the appropriate size.
     """
-    raise NotImplementedError("Problem 5 Incomplete")
+    # define the small blocks
+    A = np.array([[0, 2, 4],
+                  [1, 3, 5]], dtype=int)           # 2×3
+    B = np.array([[3, 0, 0],
+                  [3, 3, 0],
+                  [3, 3, 3]], dtype=int)           # 3×3
+    C = np.diag([-2, -2, -2], dtype=int)           # 3×3 diagonal of –2’s
+    I3 = np.eye(3, dtype=int)                      # 3×3 identity
+
+    # zero‐blocks of appropriate shapes
+    Z33 = np.zeros((3, 3), dtype=int)
+    Z32 = np.zeros((3, 2), dtype=int)
+    Z23 = np.zeros((2, 3), dtype=int)
+    Z22 = np.zeros((2, 2), dtype=int)
+
+    # first block‐row: [ 0₃ₓ₃ , Aᵀ , I₃ ]
+    top    = np.hstack([Z33,    A.T,  I3])
+
+    # second block‐row: [ A , 0₂ₓ₂ , 0₂ₓ₃ ]
+    middle = np.hstack([A,      Z22,  Z23])
+
+    # third block‐row: [ B , 0₃ₓ₂ , C   ]
+    bottom = np.hstack([B,      Z32,  C  ])
+
+    # stack the three rows
+    M = np.vstack([top, middle, bottom])
+    return M
+    
 
 
 def prob6(A):
@@ -82,7 +125,11 @@ def prob6(A):
                [ 0.        ,  1.        ,  0.        ],
                [ 0.33333333,  0.33333333,  0.33333333]])
     """
-    raise NotImplementedError("Problem 6 Incomplete")
+    # compute row sums as a column vector (n×1)
+    row_sums = A.sum(axis=1, keepdims=True)
+    # broadcast division across each row
+    return A / row_sums
+    
 
 
 def prob7():
@@ -90,10 +137,29 @@ def prob7():
     adjacent numbers in the same direction (up, down, left, right, or
     diagonally) in the grid. Use slicing, as specified in the manual.
     """
-    raise NotImplementedError("Problem 7 Incomplete")
+    # horizontal products of length 4
+    horiz = grid[:, :-3] * grid[:, 1:-2] * grid[:, 2:-1] * grid[:, 3:]
+    # vertical products of length 4
+    vert  = grid[:-3, :] * grid[1:-2, :] * grid[2:-1, :] * grid[3:, :]
+    # diagonal down-right
+    diag_dr = grid[:-3, :-3] * grid[1:-2, 1:-2] * grid[2:-1, 2:-1] * grid[3:, 3:]
+    # diagonal up-right
+    diag_ur = grid[3:, :-3]  * grid[2:-1, 1:-2] * grid[1:-2, 2:-1] * grid[:-3, 3:]
+
+    # find the maximum among all
+    max_prod = max(horiz.max(), vert.max(), diag_dr.max(), diag_ur.max())
+    return int(max_prod)
+    
 
     
 if __name__ == "__main__":
     print("A @ B =\n", prob1()) 
     print("Result of -A^3 + 9A^2 - 15A =")
     print(prob2())
+    print(prob3())
+    A = np.array([-3, -1, 3])
+    print(prob4(A))
+    print(prob5())
+    A = np.array([[1,1,0],[0,1,0],[1,1,1]])
+    print(prob6(A))
+    print(prob7()) 
