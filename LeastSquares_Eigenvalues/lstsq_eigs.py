@@ -1,8 +1,8 @@
 # lstsq_eigs.py
 """Volume 1: Least Squares and Computing Eigenvalues.
-<Name>
-<Class>
-<Date>
+Emmanuel Oguadimma 
+MTH 520
+09/06/2025
 """
 
 import numpy as np
