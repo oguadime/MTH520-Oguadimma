@@ -2,7 +2,7 @@
 
 Emmanuel Oguadimma 
 MTH 520
-16/06/2025
+16/05/2025
 """
 
 import numpy as np
