@@ -18,3 +18,23 @@ Linter Notes: None
 
 -------------------------------------------------------------------------------
 
+05/23/25 12:43
+
+Problem 1 (15 points):
+Score += 15
+
+Problem 2 (15 points):
+Score += 15
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (10 points):
+NameError: name 'combinations' is not defined
+
+Total score: 40/50 = 80.0%
+
+Linter Notes: None
+
+-------------------------------------------------------------------------------
+
